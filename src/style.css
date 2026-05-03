@@ -1,0 +1,34 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 336px;
+  height: 262px;
+  background: #000;
+  overflow: hidden;
+}
+
+#viewport {
+  display: flex;
+  width: 336px;
+  height: 262px;
+  overflow: hidden;
+}
+
+#canvas {
+  flex-shrink: 0;
+  width: 224px;
+  height: 288px;
+  margin-top: -15px;
+  image-rendering: pixelated;
+}
+
+#gutter {
+  flex-shrink: 0;
+  width: 112px;
+  height: 262px;
+  image-rendering: pixelated;
+}
