@@ -19,7 +19,7 @@ function copyStrips() {
 
 window.Module = {
   canvas: mameCanvas,
-  arguments: ['galaga', '-window'],
+  arguments: ['galaga', '-window', '-nounevenstretch', '-resolution', '224x288'],
   locateFile: (f) => `/${f}`,
   print: (text) => console.log('[MAME]', text),
   printErr: (text) => console.error('[MAME]', text),
