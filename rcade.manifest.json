@@ -3,7 +3,7 @@
   "name": "just-galaga",
   "display_name": "Just Galaga",
   "description": "It's just Galaga. Cuz I like Galaga.",
-  "visibility": "internal",
+  "visibility": "public",
   "authors": [
     {
       "display_name": "lem"
