@@ -1,5 +1,6 @@
 import './style.css'
 import { PLAYER_1, SYSTEM } from '@rcade/plugin-input-classic'
+import { MANIFEST, BLOB, XOR_KEY } from './roms-blob.js'
 
 // Must be defined before galaga.js executes
 // Copy the cropped top/bottom strips into the gutter canvas each frame.
@@ -25,18 +26,16 @@ window.Module = {
   onAbort: (reason) => console.error('[MAME abort reason]', reason),
   postRun: [() => { requestAnimationFrame(copyStrips); }],
   preRun: [() => {
+    const b64 = atob(BLOB);
+    const raw = new Uint8Array(b64.length);
+    for (let i = 0; i < b64.length; i++) raw[i] = b64.charCodeAt(i) ^ XOR_KEY;
+
     FS.mkdir('/roms');
     FS.mkdir('/roms/galaga');
 
-    const files = [
-      '51xx.bin', '54xx.bin',
-      'gg1_1b.3p', 'gg1_2b.3m', 'gg1_3.2m', 'gg1_4b.2l',
-      'gg1_5b.3f', 'gg1_7b.2c', 'gg1_9.4l', 'gg1_10.4f', 'gg1_11.4d',
-      'prom-1.1d', 'prom-2.5c', 'prom-3.1c', 'prom-4.2n', 'prom-5.5n',
-    ];
-    files.forEach(name => {
-      FS.createPreloadedFile('/roms/galaga', name, `/roms/galaga/${name}`, true, true);
-    });
+    for (const { name, offset, size } of MANIFEST) {
+      FS.writeFile(`/roms/galaga/${name}`, raw.subarray(offset, offset + size));
+    }
   }],
 };
 
